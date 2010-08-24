@@ -1,0 +1,28 @@
+#!/usr/bin/env python
+# 
+# Basic webscraper. Given a URL and anchor text, find
+# print all HREF links to the found anchor tags.
+#
+# Usage: scrape-basic http://www.usenix.org/events/sec10/tech/ "Full paper"
+#
+# returns:
+#
+# http://www.usenix.org/events/sec10/tech/full_papers/Sehr.pdf
+# ...
+# http://www.usenix.org/events/sec10/tech/full_papers/Gupta.pdf
+#
+# Pipe into "wget -i -" to download the files one-by-one.
+#
+
+from scrape import *
+
+import sys,os
+
+if len(sys.argv) != 3:
+    print "usage: scrape-basic URL A-TEXT"
+    sys.exit(1)
+
+main_region = s.go(sys.argv[1])
+all = main_region.all('a', sys.argv[2])
+for r in all:
+    print s.resolve(r.__getitem__('href'))
