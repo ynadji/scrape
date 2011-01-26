@@ -1,0 +1,28 @@
+#!/usr/bin/env python
+#
+# Basic webscraper. Given a URL print all anchor tag
+# URIs
+#
+# Usage: scrape http://www.cc.gatech.edu/~ynadji3
+#
+# returns:
+#
+# http://www.gatech.edu/
+# http://www.iit.edu
+# http://ir.iit.edu
+# ...
+# http://mobile.slashdot.org/story/09/11/11/2318247/Making-Carriers-Shoulder-Smartphone-Security?art_pos=31
+#
+
+from scrape import *
+
+import sys,os
+
+if len(sys.argv) != 2:
+    print "usage: scrape URL"
+    sys.exit(2)
+
+main_region = s.go(sys.argv[1])
+all = main_region.all('a')
+for r in all:
+    print s.resolve(r.__getitem__('href'))
