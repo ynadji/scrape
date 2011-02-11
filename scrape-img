@@ -16,10 +16,27 @@ from scrape import *
 import slib
 
 import sys,os
+from optparse import OptionParser
 
-if len(sys.argv) != 2:
+if len(sys.argv) < 2:
     print "usage: scrape URL"
     sys.exit(2)
 
-main_region = s.go(sys.argv[1])
-slib.basic(main_region, 'img', 'src', usealltags=True)
+def main():
+    """main function for standalone usage"""
+    usage = "usage: %prog [options] URL"
+    parser = OptionParser(usage=usage)
+    parser.add_option('-t', '--parse-thumbnail', dest='thumb', default=False,
+            action='store_true')
+
+    (options, args) = parser.parse_args()
+
+    if len(args) != 1:
+        parser.print_help()
+        return 2
+
+    main_region = s.go(args[0])
+    slib.basic(main_region, 'img', 'src', usealltags=True, parsethumb=options.thumb)
+
+if __name__ == '__main__':
+    sys.exit(main())
