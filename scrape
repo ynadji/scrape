@@ -15,6 +15,7 @@
 #
 
 from scrape import *
+import slib
 
 import sys,os
 
@@ -23,6 +24,4 @@ if len(sys.argv) != 2:
     sys.exit(2)
 
 main_region = s.go(sys.argv[1])
-all = main_region.all('a')
-for r in all:
-    print s.resolve(r.__getitem__('href'))
+slib.basic(main_region, 'a', 'href')

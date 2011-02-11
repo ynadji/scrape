@@ -13,6 +13,7 @@
 #
 
 from scrape import *
+import slib
 
 import sys,os
 
@@ -21,6 +22,4 @@ if len(sys.argv) != 2:
     sys.exit(2)
 
 main_region = s.go(sys.argv[1])
-all = main_region.alltags('img')
-for r in all:
-    print s.resolve(r.__getitem__('src'))
+slib.basic(main_region, 'img', 'src', usealltags=True)
